@@ -7,6 +7,7 @@
 #include <movement.h>
 #include <look.h>
 #include <logger.h>
+#include <Dht11.h>
 
 class WebServer {
 public:

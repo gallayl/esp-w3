@@ -2,10 +2,17 @@
 #include <WiFiClient.h>
 #include <WebServer.h>
 
+
 WebServer::WebServer() {
 	this->page = "<html><head><title>ESP-W3</title></head> ";
 	this->page += "<body> ";
 	this->page += "<h1>ESP-02</h1> ";
+	this->page += "<p>Temperature: <strong> ";
+	this->page += Dht11::GetTemperature();
+	this->page += "</strong> </p> ";
+	this->page += "<p>Huminidity: <strong> ";
+	this->page += Dht11::GetHuminidity();
+	this->page += "</strong> </p> ";
 	this->page += "<h2>Head</h2>";
 	this->page += "<a href='/headleft'>&larr;</a> <a href='headcenter'>&uarr;</a> <a href='/headright'>&rarr;</a> <br/> ";
 	this->page += "<h2>Move</h2>";
@@ -21,7 +28,7 @@ void WebServer::Setup(Movement movement, Look look, const char* ssid, const char
 	this->move = movement;
 	this->look = look;
 
-	this->look.Setup(D3);
+	this->look.Setup(D0);
 
 	Logger::Write("Connecting to ");
 	Logger::Write(ssid);
@@ -31,11 +38,10 @@ void WebServer::Setup(Movement movement, Look look, const char* ssid, const char
 		delay(500);
 		Logger::Write(".");
 	}
-	Logger::WriteLine("");
-	Logger::Write("WiFi connected");
+	Logger::Write(" Connected");
 
 	// Print the IP address
-	Logger::Write("Use this URL to connect: ");
+	Logger::Write("Url: ");
 	Logger::Write("http://");
 	Logger::Write(WiFi.localIP().toString());
 	Logger::WriteLine("/");

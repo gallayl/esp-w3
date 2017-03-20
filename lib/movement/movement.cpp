@@ -4,7 +4,6 @@
 #include <Arduino.h>
 
 Movement::Movement() {
-	Logger::WriteLine("Movement constructed.");
 }
 
 Movement::~Movement() { }

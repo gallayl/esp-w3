@@ -4,6 +4,7 @@
 #include <webserver.h>
 #include <logger.h>
 #include <look.h>
+#include <Dht11.h>
 
 Movement move = Movement();
 WebServer server = WebServer();
@@ -17,9 +18,11 @@ const char* HostName = "ESP-W2";
 void setup() {
   delay(100);
   Serial.begin(9600);
-
+  Dht11::Setup();
+  Logger::Setup();
   Logger::WriteLine("Booting E2-W...");
-	move.Setup(D0, D2, D1);
+	//move.Setup(D0, D2, D1);
+
 	server.Setup(move, look, WifiSsid, WifiPass, HostName);
 }
 

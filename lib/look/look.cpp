@@ -1,9 +1,7 @@
 #include "look.h"
 
 void Look::Setup(int pwmPin){
-    Logger::Write("Setting up Look to PIN ");
-    Logger::Write(pwmPin);
-    Logger::WriteLine("");
+    Logger::Write("Setting up Look...");
 
     this->verticalAngle = 90;
     this->verticalMin = 60;
@@ -15,6 +13,8 @@ void Look::Setup(int pwmPin){
 };
 
 void Look::SetAngle(byte newAngle){
+  Logger::Write("Look angle ");
+  Logger::Write(newAngle);
   this->verticalAngle = newAngle;
 }
 
