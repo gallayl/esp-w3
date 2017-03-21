@@ -6,12 +6,10 @@ void Dht11::Setup(){
   dht.begin();
 }
 
-int Dht11::GetTemperature(){
-  int temp = dht.readTemperature();
-  Logger::Write(temp);
-  return temp;
+float Dht11::GetTemperature(){
+  return dht.readTemperature();
 }
 
-int Dht11::GetHuminidity(){
+float Dht11::GetHuminidity(){
   return  dht.readHumidity();
 }

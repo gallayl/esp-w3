@@ -2,22 +2,30 @@
 #include <WiFiClient.h>
 #include <WebServer.h>
 
+WebServer::WebServer(){
 
-WebServer::WebServer() {
-	this->page = "<html><head><title>ESP-W3</title></head> ";
-	this->page += "<body> ";
-	this->page += "<h1>ESP-02</h1> ";
-	this->page += "<p>Temperature: <strong> ";
-	this->page += Dht11::GetTemperature();
-	this->page += "</strong> </p> ";
-	this->page += "<p>Huminidity: <strong> ";
-	this->page += Dht11::GetHuminidity();
-	this->page += "</strong> </p> ";
-	this->page += "<h2>Head</h2>";
-	this->page += "<a href='/headleft'>&larr;</a> <a href='headcenter'>&uarr;</a> <a href='/headright'>&rarr;</a> <br/> ";
-	this->page += "<h2>Move</h2>";
-	this->page += "<a style='margin-left: 20px;' href='/forward'>&uarr;</a> <br/> <a href='/left'>&larr;</a>  <a href='/back'>&darr;</a> <a href='/right'>&rarr;</a>  </body></html>";
 }
+
+String WebServer::GetPage() {
+	String page;
+	page = "<html><head><title>ESP-W3</title></head> ";
+	page += "<body> ";
+	page += "<h1>ESP-02</h1> ";
+	page += "<p>Temperature: <strong> ";
+	page += String(Dht11::GetTemperature(),2);
+	page += "*</strong> </p> ";
+	page += "<p>Huminidity: <strong> ";
+	page += String(Dht11::GetHuminidity(),2);
+	page += "%</strong> </p> ";
+	page += "<h2>Head</h2>";
+	page += "<a href='/headleft'>&larr;</a> <a href='headcenter'>&uarr;</a> <a href='/headright'>&rarr;</a> <br/> ";
+	page += "<h2>Move</h2>";
+	page += "<a style='margin-left: 20px;' href='/forward'>&uarr;</a> <br/> <a href='/left'>&larr;</a>  <a href='/back'>&darr;</a> <a href='/right'>&rarr;</a>  </body></html>";
+
+	return page;
+}
+
+
 
 WebServer::~WebServer() {
 	// TODO Auto-generated destructor stub
@@ -58,43 +66,43 @@ const int headVerticalSteps = 50;
 
 void WebServer::SetupResponses(){
 	this->server.on("/", [&](){
-		this->server.send(200, "text/html", page);
+		this->server.send(200, "text/html", this->GetPage());
 	});
 
 	server.on("/forward", [&](){
 		this->move.GoForward(moveAmount);
-		this->server.send(200, "text/html", page);
+		this->server.send(200, "text/html", this->GetPage());
 	});
 
 	this->server.on("/back", [&](){
 		this->move.GoBack(moveAmount);
-		this->server.send(200, "text/html", page);
+		this->server.send(200, "text/html", this->GetPage());
 	});
 
 	this->server.on("/left", [&](){
 		this->move.TurnLeft(rotateAmount);
-		this->server.send(200, "text/html", page);
+		this->server.send(200, "text/html", this->GetPage());
 	});
 
 	this->server.on("/right", [&](){
 		this->move.TurnRight(rotateAmount);
-		this->server.send(200, "text/html", page);
+		this->server.send(200, "text/html", this->GetPage());
 	});
 
 	this->server.on("/headleft", [&](){
 		this->look.Left(headVerticalSteps);
-		this->server.send(200, "text/html", page);
+		this->server.send(200, "text/html", this->GetPage());
 	});
 
 
 	this->server.on("/headcenter", [&](){
 		this->look.SetAngle(90);
-		this->server.send(200, "text/html", page);
+		this->server.send(200, "text/html", this->GetPage());
 	});
 
 	this->server.on("/headright", [&](){
 		this->look.Right(headVerticalSteps);
-		this->server.send(200, "text/html", page);
+		this->server.send(200, "text/html", this->GetPage());
 	});
 
 	this->server.begin();

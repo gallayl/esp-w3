@@ -7,8 +7,8 @@
 class Dht11 {
 public:
   static void Setup();
-  static int GetTemperature();
-  static int GetHuminidity();
+  static float GetTemperature();
+  static float GetHuminidity();
 };
 
 #endif

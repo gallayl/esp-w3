@@ -17,6 +17,7 @@ public:
 
 	void Setup(Movement move, Look look, const char* ssid, const char* password, const char* hostname);
 	void Serve();
+	String GetPage();
 
 private:
 	char ssid[];
@@ -28,7 +29,6 @@ private:
 	MDNSResponder mdns;
 	String page;
 	void SetupResponses();
-
 };
 
 #endif /* WEBSERVER_H_ */
